@@ -13,7 +13,7 @@ const mailSender = async(email,title,body) => {
         let info = await transporter.sendMail({
             from:"CodeWeavers || Learnerbrains by Kushagra Agrawal",
             to:`${email}`,
-            tile:`${title}`,
+            title:`${title}`,
             html:`${body}`,
         })
         console.log(info);
