@@ -3,7 +3,7 @@ import React from 'react'
 const IconBtn = () => {
   return (
     <div>
-      IconBtn
+      Icon Btn
     </div>
   )
 }
