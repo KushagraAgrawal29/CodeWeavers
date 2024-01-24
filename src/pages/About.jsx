@@ -9,6 +9,7 @@ import FoundingStory from "../assets/Images/FoundingStory.png";
 import CodeweaversStats from "../components/core/AboutPage/CodeweaversStats";
 import LearningGrid from "../components/core/AboutPage/LearningGrid";
 import ContactForm from "../components/core/ContactPage/ContactForm";
+import Footer from "../components/Common/Footer";
 
 const About = () => {
   return (
@@ -134,6 +135,22 @@ const About = () => {
             <ContactForm/>
           </div>
         </div>
+      </div>
+
+      {/* Review section  */}
+      <div className='bg-richblack-900'>
+        <div className='w-11/12 mt-5 mx-auto flex flex-col justify-between text-white' >
+          <div className="mt-8">
+            <h2 className='text-center text-3xl md:text-4xl font-semibold mt-8' >
+              Review From Other Learners
+            </h2>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <Footer/>
       </div>
     
     </div>
