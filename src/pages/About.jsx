@@ -7,6 +7,8 @@ import Quote from "../components/core/AboutPage/Quote";
 
 import FoundingStory from "../assets/Images/FoundingStory.png";
 import CodeweaversStats from "../components/core/AboutPage/CodeweaversStats";
+import LearningGrid from "../components/core/AboutPage/LearningGrid";
+import ContactForm from "../components/core/ContactPage/ContactForm";
 
 const About = () => {
   return (
@@ -110,9 +112,30 @@ const About = () => {
         </div>
       </section>
 
+
+      {/* section - 4  */}
       <div className="bg-richblack-700">
         <CodeweaversStats/>
       </div>
+
+      {/* section - 5  */}
+      <div className='bg-richblack-900' >
+        <div className="w-11/12 mx-auto mt-20 flex flex-col justify-between gap-10 text-white">
+          <LearningGrid/>
+        </div>
+      </div>
+
+      {/* section - 6  */}
+      <div className="bg-richblack-900">
+        <div className='w-11/12 mt-20 mx-auto flex flex-col justify-between text-white'>
+          <h2 className=' text-4xl font-semibold text-center text-richblack-5'>Get in touch</h2>
+          <p className=' text-richblack-300 text-center mt-3'>We'd love to here for you, Please fill out this form.</p>
+          <div className="mx-auto mt-12">
+            <ContactForm/>
+          </div>
+        </div>
+      </div>
+    
     </div>
   );
 };
