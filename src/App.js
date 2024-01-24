@@ -7,6 +7,7 @@ import Navbar from "./components/Common/Navbar";
 import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="update-password/:id" element={<UpdatePassword />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </div>
   );

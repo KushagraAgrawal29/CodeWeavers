@@ -113,46 +113,47 @@ const About = () => {
         </div>
       </section>
 
-
       {/* section - 4  */}
       <div className="bg-richblack-700">
-        <CodeweaversStats/>
+        <CodeweaversStats />
       </div>
 
       {/* section - 5  */}
-      <div className='bg-richblack-900' >
+      <div className="bg-richblack-900">
         <div className="w-11/12 mx-auto mt-20 flex flex-col justify-between gap-10 text-white">
-          <LearningGrid/>
+          <LearningGrid />
         </div>
       </div>
 
       {/* section - 6  */}
       <div className="bg-richblack-900">
-        <div className='w-11/12 mt-20 mx-auto flex flex-col justify-between text-white'>
-          <h2 className=' text-4xl font-semibold text-center text-richblack-5'>Get in touch</h2>
-          <p className=' text-richblack-300 text-center mt-3'>We'd love to here for you, Please fill out this form.</p>
+        <div className="w-11/12 mt-20 mx-auto flex flex-col justify-between text-white">
+          <h2 className=" text-4xl font-semibold text-center text-richblack-5">
+            Get in touch
+          </h2>
+          <p className=" text-richblack-300 text-center mt-3">
+            We'd love to here for you, Please fill out this form.
+          </p>
           <div className="mx-auto mt-12">
-            <ContactForm/>
+            <ContactForm />
           </div>
         </div>
       </div>
 
       {/* Review section  */}
-      <div className='bg-richblack-900'>
-        <div className='w-11/12 mt-5 mx-auto flex flex-col justify-between text-white' >
+      <div className="bg-richblack-900">
+        <div className="w-11/12 mt-5 mx-auto flex flex-col justify-between text-white">
           <div className="mt-8">
-            <h2 className='text-center text-3xl md:text-4xl font-semibold mt-8' >
+            <h2 className="text-center text-3xl md:text-4xl font-semibold mt-8">
               Review From Other Learners
             </h2>
           </div>
         </div>
       </div>
 
-
       <div>
-        <Footer/>
+        <Footer />
       </div>
-    
     </div>
   );
 };
