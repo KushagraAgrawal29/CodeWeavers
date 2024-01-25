@@ -10,6 +10,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PublicRoute from "./components/core/Auth/PublicRoute";
 import VerifyEmail from "./pages/VerifyEmail";
+import MyProfile from "./components/core/Dashboard/MyProfile";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             />
           }
         />
+        <Route path="/my-profile" element={<MyProfile/>}/>
       </Routes>
     </div>
   );
