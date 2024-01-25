@@ -5,9 +5,7 @@ import { ContactUs } from "../../../services/operations/contactService";
 
 const ContactForm = () => {
   const [loading, setLoading] = useState(false);
-
-
-
+  
   const {
     register,
     reset,
@@ -17,7 +15,7 @@ const ContactForm = () => {
 
 
   const onSubmit = async(contactData) => {
-    await ContactUs(contactData,reset,setLoading);
+    await ContactUs(contactData,setLoading,reset);
   }
 
   return (
