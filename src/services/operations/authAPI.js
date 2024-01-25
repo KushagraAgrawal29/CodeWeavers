@@ -12,34 +12,29 @@ const {
     RESETPASSSWORD_API,
 } = authApi
 
-export function sendOTP(email,navigate){
-    return async(dispatch) => {
-        const toastId = toast.loading("Loading");
-        dispatch(setLoading(true));
+export const sendOTP = async (email,dispatch,navigate) => {
+    const toastId = toast.loading("Loading");
+    dispatch(setLoading(true));
 
-        try{
-            const response = await apiConnector("POST",SENDOTP_API,{
-                email,
-                checkUserPresent:true
-            })
-            console.log("SENDOTP API RESPONSE......",response);
-
-            console.log(response.data.success);
-
-            if(!response.data.success){
-                throw new Error(response.data.message);
-            }
-
-            toast.success("OTP sent successfully");
-            navigate("/verify-email");
+    try{
+        const response = await apiConnector("POST",SENDOTP_API,{
+            email,
+            checkUserPresent:true
+        })
+        console.log("SENDOTP API RESPONSE......",response);
+        console.log(response.data.success);
+        if(!response.data.success){
+            throw new Error(response.data.message);
         }
-        catch(error){
-            console.log("SENDOTP API ERROR.........",error);
-            toast.error("Could Not Send OTP");
-        }
-        dispatch(setLoading(false));
-        toast.dismiss(toastId);
+        toast.success("OTP sent successfully");
+        navigate("/verify-email");
     }
+    catch(error){
+        console.log("SENDOTP API ERROR.........",error);
+        toast.error("Could Not Send OTP");
+    }
+    dispatch(setLoading(false));
+    toast.dismiss(toastId);
 }
 
 export function getPasswordResetToken(email,setEmailSent){

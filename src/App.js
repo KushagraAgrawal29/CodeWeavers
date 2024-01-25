@@ -8,6 +8,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import PublicRoute from "./components/core/Auth/PublicRoute";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -21,6 +23,13 @@ function App() {
         <Route path="update-password/:id" element={<UpdatePassword />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/verify-email" element={
+            <PublicRoute
+              route={<VerifyEmail/>}
+            />
+          }
+        />
       </Routes>
     </div>
   );

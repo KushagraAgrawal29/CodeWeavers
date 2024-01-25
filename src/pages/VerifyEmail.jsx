@@ -5,11 +5,11 @@ import OtpInput from "react-otp-input";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
-import { signUp } from "../services/operations/authAPI";
+import { sendOTP, signUp } from "../services/operations/authAPI";
 
 const VerifyEmail = () => {
   const email = useSelector((state) => state.auth?.signUpData?.email) ?? "";
-  const { loading,signUpData } = useSelector((state) => state.auth);
+  const { loading, signupData } = useSelector((state) => state.auth);
 
   const [otp, setOtp] = useState("");
 
@@ -18,11 +18,11 @@ const VerifyEmail = () => {
 
   const handleVerifyAndSignUp = (e) => {
     e.preventDefault();
-    signUp({...signUpData,otp},dispatch,navigate);
-  }
+    signUp({ ...signupData, otp }, dispatch, navigate);
+  };
 
-  if(!signUpData){
-    return <Navigate to={"/signup"}/>
+  if (!signupData) {
+    return <Navigate to={"/signup"} />;
   }
 
   return (
@@ -80,9 +80,10 @@ const VerifyEmail = () => {
               </div>
             </Link>
 
-            <button className='flex items-center gap-x-2 text-blue-100'>
-                <RxCountdownTimer/>
-                <p>Resend OTP</p>
+            <button className="flex items-center gap-x-2 text-blue-100"
+              onClick={() => sendOTP(signupData.email,dispatch,navigate)}>
+              <RxCountdownTimer />
+              <p>Resend OTP</p>
             </button>
           </div>
         </div>
