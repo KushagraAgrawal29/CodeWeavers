@@ -1,15 +1,16 @@
 import toast from "react-hot-toast"
-import { endpoints } from "../apis"
+import { authApi } from "../apis"
 import { setLoading, setToken } from "../../slices/authSlice";
 import { apiConnector } from "../apiconnector";
+import { setUser } from "../../slices/profileSlice";
 
 const {
     SENDOTP_API,
-    // SIGNUP_API,
+    SIGNUP_API,
     LOGIN_API,
     RESETPASSTOKEN_API,
     RESETPASSSWORD_API,
-} = endpoints
+} = authApi
 
 export function sendOTP(email,navigate){
     return async(dispatch) => {
@@ -110,5 +111,26 @@ export function login (email,password){
         }
         dispatch(setLoading(false));
         toast.dismiss(toastId);
-    }   
+    };   
+};
+
+export const signUp = async (signUpData,dispatch,navigate) => {
+    dispatch(setLoading(true));
+    const toastId = toast.loading('Loading...');
+
+    try{
+        const response = await apiConnector('POST',SIGNUP_API,signUpData);
+
+        toast.success("Sign Up Successful");
+        dispatch(setToken(response.data.token));
+        dispatch(setUser(response.data.user));
+        localStorage.setItem('token',JSON.stringify(response.data.token));
+        navigate('/dashboard/my-profile')
+    }
+    catch(error){
+        toast.error(error?.response?.data?.error || "Sign Up Failed");
+        navigate("/signup")
+    }
+    toast.dismiss(toastId);
+    dispatch(setLoading(false));
 }
