@@ -54,7 +54,7 @@ const SignupForm = () => {
 
     dispatch(setSignupData(signupData))
     //send otp for user verification
-    dispatch(sendOTP(formData.email,navigate));
+    dispatch(sendOTP(formData.email,dispatch,navigate));
 
     //Reset
     setFormData({

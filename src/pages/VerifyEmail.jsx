@@ -48,21 +48,20 @@ const VerifyEmail = () => {
                   value={otp}
                   onChange={setOtp}
                   numInputs={6}
-                  renderInput={(props) => {
+                  renderInput={(props) => (
                     <input
                       {...props}
                       placeholder="-"
                       className="w-[48px] lg:w-[60px] border-0 bg-richblack-800 rounded-lg aspect-square text-richblack-5 text-center focus:border-0 focus:outline-2 focus:outline-yellow-50 shadow-[0_1px_0_rgba(255,255,255,0.3)]"
                       style={{}}
-                    />;
-                  }}
+                    />
+                  )}
                   containerStyle={{
                     justifyContent: "space-between",
                     gap: "0 6px",
                   }}
                 />
               </div>
-
               <button
                 type="submit"
                 className="w-full bg-yellow-50 p-3 rounded-lg mt-6 font-medium text-richblack-900"
@@ -80,8 +79,10 @@ const VerifyEmail = () => {
               </div>
             </Link>
 
-            <button className="flex items-center gap-x-2 text-blue-100"
-              onClick={() => sendOTP(signupData.email,dispatch,navigate)}>
+            <button
+              className="flex items-center gap-x-2 text-blue-100"
+              onClick={() => sendOTP(signupData.email, dispatch, navigate)}
+            >
               <RxCountdownTimer />
               <p>Resend OTP</p>
             </button>
