@@ -11,6 +11,7 @@ export const authApi = {
    LOGIN_API: BASE_URL + "/auth/login",
    RESETPASSSWORD_API: BASE_URL + "/auth/reset-password",
    RESETPASSTOKEN_API:BASE_URL + "/auth/reset-password-token", 
+   POST_LOGOUT_USER_API: BASE_URL + "/auth/logout"
 }
 
 export const contactApi = {

@@ -10,6 +10,7 @@ const {
     LOGIN_API,
     RESETPASSTOKEN_API,
     RESETPASSSWORD_API,
+    POST_LOGOUT_USER_API
 } = authApi
 
 export const sendOTP = async (email,dispatch,navigate) => {
@@ -127,4 +128,27 @@ export const signUp = async (signUpData,dispatch,navigate) => {
     }
     toast.dismiss(toastId);
     dispatch(setLoading(false));
+};
+
+export const logout = async (token,dispatch,navigate) => {
+    try{
+        const response = await apiConnector('POST',POST_LOGOUT_USER_API,null,{
+            Authorization: `Bearer ${token}`
+        });
+        
+        console.log("LOGOUT API RESPONSE",response);
+
+        dispatch(setToken(null));
+        dispatch(setUser(null));
+        localStorage.removeItem('token');
+        toast.success("Logged Out");
+        navigate("/login");
+    }  
+    catch(error){
+        toast.error(error?.response?.data?.error || 'logout Failed');
+        dispatch(setToken(null));
+        dispatch(setUser(null));
+        localStorage.removeItem('token');
+        navigate("/login")
+    }
 }
