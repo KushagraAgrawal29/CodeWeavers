@@ -1,15 +1,21 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IconBtn from "../../../Common/IconBtn";
 import { FiUpload } from "react-icons/fi";
 import { GrInProgress } from "react-icons/gr";
+import { changeAvatar } from "../../../../services/operations/settingsServices";
+import { useNavigate } from "react-router-dom";
 
 const ChangeProfilePicture = () => {
   const [previewSource, setPreviewSource] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fileInputRef = useRef(null);
 
@@ -39,6 +45,7 @@ const ChangeProfilePicture = () => {
     const formData = new FormData();
 
     formData.append("file", imageFile);
+    await changeAvatar(token, formData, setLoading, dispatch, navigate);
   };
 
   return (
