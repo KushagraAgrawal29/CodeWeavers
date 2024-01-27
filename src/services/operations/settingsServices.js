@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
 import { apiConnector } from "../apiconnector";
-import { profileApi, userApi } from "../apis";
+import { authApi, profileApi, userApi } from "../apis";
 import { getCurrentUser } from "./profileServices";
 import { setUser } from "../../slices/profileSlice";
 
 const { PUT_CHANGE_AVATAR_API } = userApi;
 const { PUT_UPDATE_PROFILE_API } = profileApi;
+const { PUT_CHANGE_PASSWORD_API } = authApi;
 
 export const changeAvatar = async (
   token,
@@ -63,6 +64,36 @@ export const updateProfile = async (
   } catch (error) {
     toast.error(error?.response?.data?.error || "Update Failed");
   }
+  setLoading(false);
+  toast.dismiss(toastId);
+};
+
+export const changePassword = async (
+  token,
+  passwordData,
+  setLoading,
+  dispatch,
+  naviagte
+) => {
+  const toastId = toast.loading("Loading...");
+  setLoading(true);
+
+  try {
+    const response = await apiConnector(
+      "PUT",
+      PUT_CHANGE_PASSWORD_API,
+      passwordData,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    console.log(response.data);
+    toast.success("Password Changed Successfully");
+    //TODO
+  } catch (error) {
+    toast.error(error?.response?.data?.error || "Password update Failed");
+  }
+
   setLoading(false);
   toast.dismiss(toastId);
 };
