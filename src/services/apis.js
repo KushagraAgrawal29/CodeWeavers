@@ -22,3 +22,7 @@ export const userApi = {
    PUT_CHANGE_AVATAR_API: BASE_URL + '/users/changeavatar',
    GET_CURRENT_LOGGED_USER_API: BASE_URL + '/users/currentuser',
 }
+
+export const profileApi = {
+   PUT_UPDATE_PROFILE_API: BASE_URL + '/profiles ',
+}
