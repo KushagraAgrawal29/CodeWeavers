@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
 import IconBtn from "./IconBtn";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 const ConfirmationModel = ({ modalData }) => {
   const modalDiv = useRef(null);
 
-  
+  useOnClickOutside(modalDiv, modalData.closeModalHandler);
 
   return (
     <div className="fixed !mt-0 inset-0 grid overflow-auto place-items-center bg-white bg-opacity-10 backdrop-blur-sm z-10">
