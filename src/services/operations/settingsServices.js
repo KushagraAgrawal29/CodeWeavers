@@ -5,7 +5,7 @@ import { getCurrentUser } from "./profileServices";
 import { setUser } from "../../slices/profileSlice";
 import { deleteBrowserData } from "./authAPI";
 
-const { PUT_CHANGE_AVATAR_API } = userApi;
+const { PUT_CHANGE_AVATAR_API, DELETE_DELETE_CURRENT_USER_API } = userApi;
 const { PUT_UPDATE_PROFILE_API } = profileApi;
 const { PUT_CHANGE_PASSWORD_API } = authApi;
 
@@ -90,11 +90,34 @@ export const changePassword = async (
     );
     console.log(response.data);
     toast.success("Password Changed Successfully");
-    await deleteBrowserData(dispatch,naviagte);
+    await deleteBrowserData(dispatch, naviagte);
   } catch (error) {
     toast.error(error?.response?.data?.error || "Password update Failed");
   }
 
   setLoading(false);
+  toast.dismiss(toastId);
+};
+
+export const deleteCurrentUser = async (token, dispatch, navigate) => {
+  const toastId = toast.loading("Loading.....");
+
+  try {
+    const response = await apiConnector(
+      "DELETE",
+      DELETE_DELETE_CURRENT_USER_API,
+      null,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    console.log("DELETE_DELETE_CURRENT_USER_API response", response);
+    toast.success("Account deleted successfully");
+    await deleteBrowserData(dispatch, navigate);
+  } catch (error) {
+    console.log(error);
+    toast.error(error?.response?.data?.error || "Account Deletion Failed");
+  }
+
   toast.dismiss(toastId);
 };

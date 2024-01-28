@@ -13,6 +13,8 @@ const {
     resetPassword,
 } = require("../controllers/ResetPassword");
 
+const { deleteCurrentUser } = require("../controllers/User");
+
 const {auth} = require("../middlewares/auth");
 
 // <------------Authentication routes ----------------->
@@ -35,6 +37,8 @@ router.post("/reset-password-token",resetPasswordToken);
 
 //route for reseting user's password after verification
 router.post("/reset-password",resetPassword);
+
+router.delete("/deleteCurrentUser",auth,deleteCurrentUser);
 
 module.exports = router;
 
