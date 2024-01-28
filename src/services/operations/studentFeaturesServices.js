@@ -16,7 +16,8 @@ export const getEnrolledCourses = async(token,setEnrolledCourses,dispatch,naviga
         setEnrolledCourses(response.data.data);
     }
     catch(error){
-        toast.error(error?.response?.data?.error || 'Fetch Failed');
+        console.log(error);
+        toast.error(error?.response?.data?.error || 'Fetch Failed,Could not get enrolled courses');
     }
     toast.dismiss(toastId);
 };

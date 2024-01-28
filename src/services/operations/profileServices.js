@@ -22,6 +22,7 @@ export const getCurrentUser = async (token, dispatch, naviagte) => {
     console.log(response.data.data);
     dispatch(setUser(response.data.data));
   } catch (error) {
+    console.log(error?.response?.data?.error || error);
     toast.error("Could not get user details, Login Again");
     dispatch(logout(token, dispatch, naviagte));
     naviagte("/login");

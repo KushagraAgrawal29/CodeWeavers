@@ -123,6 +123,7 @@ export const signUp = async (signUpData,dispatch,navigate) => {
         navigate('/dashboard/my-profile')
     }
     catch(error){
+        console.log(error?.response?.data?.error || error);
         toast.error(error?.response?.data?.error || "Sign Up Failed");
         navigate("/signup")
     }
@@ -145,6 +146,7 @@ export const logout = async (token,dispatch,navigate) => {
         navigate("/login");
     }  
     catch(error){
+        console.log(error?.response?.data?.error || error);
         toast.error(error?.response?.data?.error || 'logout Failed');
         dispatch(setToken(null));
         dispatch(setUser(null));

@@ -20,6 +20,7 @@ export const ContactUs = async(contactData,setLoading,reset) => {
         })
     }
     catch(error){
+        console.log(error?.response?.data?.error || error);
         toast.error(error?.response?.data?.error || 'Contact failed')
     }
     toast.dismiss(toastId);

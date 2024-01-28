@@ -34,6 +34,7 @@ export const changeAvatar = async (
     toast.success("Profile Picture updated successfully");
     getCurrentUser(token, dispatch, navigate);
   } catch (error) {
+    console.log(error?.response?.data?.error || error);
     toast.error(error?.response?.data?.error || "Upload Failed");
   }
   setLoading(false);
@@ -63,6 +64,7 @@ export const updateProfile = async (
     toast.success("Profile Updated Successfully");
     setUser(response.data);
   } catch (error) {
+    console.log(error?.response?.data?.error  || error);
     toast.error(error?.response?.data?.error || "Update Failed");
   }
   setLoading(false);
@@ -92,6 +94,7 @@ export const changePassword = async (
     toast.success("Password Changed Successfully");
     await deleteBrowserData(dispatch, naviagte);
   } catch (error) {
+    console.log(error?.response?.data?.error || error);
     toast.error(error?.response?.data?.error || "Password update Failed");
   }
 
@@ -115,7 +118,7 @@ export const deleteCurrentUser = async (token, dispatch, navigate) => {
     toast.success("Account deleted successfully");
     await deleteBrowserData(dispatch, navigate);
   } catch (error) {
-    console.log(error);
+    console.log(error || error?.response?.data?.error);
     toast.error(error?.response?.data?.error || "Account Deletion Failed");
   }
 
