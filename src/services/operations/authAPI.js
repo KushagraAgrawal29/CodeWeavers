@@ -151,4 +151,11 @@ export const logout = async (token,dispatch,navigate) => {
         localStorage.removeItem('token');
         navigate("/login")
     }
+};
+
+export const deleteBrowserData = async(dispatch,navigate) => {
+    dispatch(setToken(null));
+    dispatch(setUser(null));
+    localStorage.removeItem('token');
+    navigate("/")
 }

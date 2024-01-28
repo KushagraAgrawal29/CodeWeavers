@@ -3,6 +3,7 @@ import { apiConnector } from "../apiconnector";
 import { authApi, profileApi, userApi } from "../apis";
 import { getCurrentUser } from "./profileServices";
 import { setUser } from "../../slices/profileSlice";
+import { deleteBrowserData } from "./authAPI";
 
 const { PUT_CHANGE_AVATAR_API } = userApi;
 const { PUT_UPDATE_PROFILE_API } = profileApi;
@@ -89,7 +90,7 @@ export const changePassword = async (
     );
     console.log(response.data);
     toast.success("Password Changed Successfully");
-    //TODO
+    await deleteBrowserData(dispatch,naviagte);
   } catch (error) {
     toast.error(error?.response?.data?.error || "Password update Failed");
   }
