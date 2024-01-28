@@ -23,6 +23,7 @@ export const userApi = {
    PUT_CHANGE_AVATAR_API: BASE_URL + '/users/changeavatar',
    GET_CURRENT_LOGGED_USER_API: BASE_URL + '/users/currentuser',
    DELETE_DELETE_CURRENT_USER_API: BASE_URL + '/users/deleteCurrentUser',
+   GET_GET_ENROLLED_COURSES_API: BASE_URL + '/users/getEnrolledCourses',
 }
 
 export const profileApi = {
