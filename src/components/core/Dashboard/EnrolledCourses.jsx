@@ -88,7 +88,7 @@ const EnrolledCourses = () => {
                     <div className="w-[25%] px-2 py-3">{course?.duration}</div>
 
                     <div className="flex flex-col gap-2 w-1/5 px-2 py-2 ">
-                      <p>Progress: {course?.progressPercentage}</p>
+                      <p>Progress: {course?.progressPercentage}%</p>
                       <ProgressBar
                         completed={course.progressPercentage || 0}
                         height="8px"
