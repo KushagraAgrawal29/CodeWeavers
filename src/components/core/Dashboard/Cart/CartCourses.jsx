@@ -1,12 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import RatingStars from "../../../Common/RatingStars";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { removeFromCart } from "../../../../slices/cartSlice";
 
 const CartCourses = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -49,7 +51,10 @@ const CartCourses = () => {
             </div>
 
             <div className="flex flex-row gap-x-5 md:flex-col items-center md:items-end md:gap-y-2">
-              <div className="flex items-center gap-x-1 rounded-md border border-richblack-600 bg-richblack-700 py-3 px-3 text-pink-200">
+              <div
+                onClick={() => dispatch(removeFromCart(course._id))}
+                className="flex items-center gap-x-1 rounded-md border border-richblack-600 bg-richblack-700 py-3 px-3 text-pink-200"
+              >
                 <RiDeleteBin6Line />
                 <span>Remove</span>
               </div>
