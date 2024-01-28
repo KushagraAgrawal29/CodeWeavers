@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Spinner from "../../../Common/Spinner";
+import CartCourses from "./CartCourses";
+import CartAmount from "./CartAmount";
 
 const Cart = () => {
   const { paymentLoading } = useSelector((state) => state.profile);
@@ -28,7 +30,10 @@ const Cart = () => {
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col-reverse lg:flex-row items-start mt-8 gap-x-10 gap-y-6"></div>
+              <div className="flex flex-col-reverse lg:flex-row items-start mt-8 gap-x-10 gap-y-6">
+                <CartCourses/>
+                <CartAmount/>
+              </div>
             )}
           </div>
         </div>
