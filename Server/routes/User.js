@@ -13,7 +13,7 @@ const {
     resetPassword,
 } = require("../controllers/ResetPassword");
 
-const { deleteCurrentUser } = require("../controllers/User");
+const { deleteCurrentUser,getEnrolledCourses } = require("../controllers/User");
 
 const {auth} = require("../middlewares/auth");
 
@@ -39,6 +39,8 @@ router.post("/reset-password-token",resetPasswordToken);
 router.post("/reset-password",resetPassword);
 
 router.delete("/deleteCurrentUser",auth,deleteCurrentUser);
+
+router.get("/getEnrolledCourses",auth,getEnrolledCourses);
 
 module.exports = router;
 

@@ -137,6 +137,7 @@ exports.displayProfilePicture = async(req,res) => {
         return res.status(500).json({
             success:false,
             message:error.message,
-        })
-    }
-}
+        });
+    };
+};
+
