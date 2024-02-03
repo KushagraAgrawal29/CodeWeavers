@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import RequirementsField from "./RequirementsField";
 import IconBtn from "../../../../Common/IconBtn";
 import { MdNavigateNext } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const CourseInformationForm = () => {
   const {
     regitser,
     setValue,
     getValues,
+    handleSubmit,
     formState: { errors },
   } = useForm();
 
@@ -21,9 +23,38 @@ const CourseInformationForm = () => {
   const [loading, setLoading] = useState();
   const [courseCategories, setCourseCategoires] = useState([]);
 
+  const isFormUpdated = () => {};
+
+  const handleCourseEdit = () => {};
+
+  const handleFormSubmit = async (data) => {
+    if (editCourse) {
+      if (!isFormUpdated()) {
+        toast.error("No changes made to the form");
+        return;
+      }
+
+      handleCourseEdit(data);
+
+      //course requirements
+
+      const formData = new FormData();
+      formData.append("title", data.courseTitle);
+      formData.append("description", data.courseDesc);
+      formData.append("price", data.coursePrice);
+      formData.append("category", data.courseCategory);
+      formData.append("whatYouWillLearn", data.courseBenefits);
+      formData.append("tags", JSON.stringify(data.courseTags));
+      formData.append("thumbnail", data.thumbnail);
+      formData.append("instructions", JSON.stringify(data.courseRequirements));
+
+      setLoading(true);
+    }
+  };
+
   return (
     <div className="border rounded-md border-richblack-700 bg-richblack-800 py-6 px-3 md:px-6">
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={handleSubmit(handleFormSubmit)}>
         {/* Course Title  */}
         <div className="flex flex-col">
           <label htmlFor="courseTitle" className="label-style">
