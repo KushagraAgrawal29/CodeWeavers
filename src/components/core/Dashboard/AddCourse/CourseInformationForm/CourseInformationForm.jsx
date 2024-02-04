@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import ChipInput from "./ChipInput";
@@ -8,8 +8,13 @@ import RequirementsField from "./RequirementsField";
 import IconBtn from "../../../../Common/IconBtn";
 import { MdNavigateNext } from "react-icons/md";
 import toast from "react-hot-toast";
-import { addCourse } from "../../../../../services/operations/courseServices";
+import {
+  addCourse,
+  editCourseDetails,
+  fetchCourseCategories,
+} from "../../../../../services/operations/courseServices";
 import { useNavigate } from "react-router-dom";
+import { setCourse, setStep } from "../../../../../slices/addCourseSlice";
 
 const CourseInformationForm = () => {
   const {
@@ -28,6 +33,27 @@ const CourseInformationForm = () => {
   const token = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getCategories = async () => {
+      setLoading(true);
+      const categories = await fetchCourseCategories();
+      setCourseCategoires(categories);
+      setLoading(false);
+    };
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    //if the course is in edit mode
+    if (editCourse && courseCategories) {
+      setValue("courseTitle", course.title);
+      setValue("courseCategory", course.category._id);
+      setValue("courseDesc", course.description);
+      setValue("coursePrice", course.price);
+      setValue("courseBenefits", course.whatYouWillLearn);
+    }
+  }, [editCourse, course, setValue, courseCategories]);
 
   const isFormUpdated = () => {
     const currentValues = getValues();
@@ -89,10 +115,13 @@ const CourseInformationForm = () => {
 
     setLoading(true);
 
-    const result = await addCourse(formData,token,dispatch,navigate);
-    if(result){
-      
+    const result = await editCourseDetails(formData, token, dispatch, navigate);
+
+    if (result) {
+      dispatch(setCourse(result));
+      dispatch(setStep(2));
     }
+    setLoading(false);
   };
 
   const handleFormSubmit = async (data) => {
@@ -103,21 +132,29 @@ const CourseInformationForm = () => {
       }
 
       handleCourseEdit(data);
-
-      //course requirements
-
-      const formData = new FormData();
-      formData.append("title", data.courseTitle);
-      formData.append("description", data.courseDesc);
-      formData.append("price", data.coursePrice);
-      formData.append("category", data.courseCategory);
-      formData.append("whatYouWillLearn", data.courseBenefits);
-      formData.append("tags", JSON.stringify(data.courseTags));
-      formData.append("thumbnail", data.thumbnail);
-      formData.append("instructions", JSON.stringify(data.courseRequirements));
-
-      setLoading(true);
+      return;
     }
+
+    //course requirements
+
+    const formData = new FormData();
+    formData.append("title", data.courseTitle);
+    formData.append("description", data.courseDesc);
+    formData.append("price", data.coursePrice);
+    formData.append("category", data.courseCategory);
+    formData.append("whatYouWillLearn", data.courseBenefits);
+    formData.append("tags", JSON.stringify(data.courseTags));
+    formData.append("thumbnail", data.thumbnail);
+    formData.append("instructions", JSON.stringify(data.courseRequirements));
+
+    setLoading(true);
+
+    const result = await addCourse(formData, token, dispatch, navigate);
+    if (result) {
+      dispatch(setCourse(result));
+      dispatch(setStep(2));
+    }
+    setLoading(false);
   };
 
   return (
