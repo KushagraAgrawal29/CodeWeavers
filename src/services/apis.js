@@ -32,4 +32,5 @@ export const profileApi = {
 
 export const courseApi = {
    POST_CREATE_COURSE_API: BASE_URL + '/courses',
+   PUT_EDIT_COURSE_API: BASE_URL + '/courses/editcourse',
 }
