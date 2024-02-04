@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import ChipInput from "./ChipInput";
 import UploadFile from "../UploadFile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RequirementsField from "./RequirementsField";
 import IconBtn from "../../../../Common/IconBtn";
 import { MdNavigateNext } from "react-icons/md";
 import toast from "react-hot-toast";
+import { addCourse } from "../../../../../services/operations/courseServices";
+import { useNavigate } from "react-router-dom";
 
 const CourseInformationForm = () => {
   const {
@@ -23,9 +25,75 @@ const CourseInformationForm = () => {
   const [loading, setLoading] = useState();
   const [courseCategories, setCourseCategoires] = useState([]);
 
-  const isFormUpdated = () => {};
+  const token = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleCourseEdit = () => {};
+  const isFormUpdated = () => {
+    const currentValues = getValues();
+
+    if (
+      !(
+        currentValues.courseTitle === course.title &&
+        currentValues.courseDesc === course.description &&
+        currentValues.coursePrice === course.price &&
+        currentValues.courseCategory === course.category._id &&
+        currentValues.courseBenefits === course.whatYouWillLearn &&
+        currentValues.courseTags.toString() === course.tags.toString() &&
+        currentValues.courseThumbnail === course.thumbnail &&
+        currentValues.courseRequirements.toString() ===
+          course.instruction.toString()
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleCourseEdit = async (data) => {
+    const formData = new FormData();
+
+    formData.append("courseId", course._id);
+
+    if (data.courseTitle !== course.title) {
+      formData.append("title", data.courseTitle);
+    }
+
+    if (data.courseDesc !== course.description) {
+      formData.append("description", data.courseDesc);
+    }
+
+    if (data.coursePrice !== course.price) {
+      formData.append("price", data.coursePrice);
+    }
+
+    if (data.courseCategory !== course.category._id) {
+      formData.append("catetory", data.courseCategory);
+    }
+
+    if (data.courseBenefits !== course.whatYouWillLearn) {
+      formData.append("whatYouWillLearn", data.courseBenefits);
+    }
+
+    if (data.courseTags.toString() !== course.tags.toString()) {
+      formData.append("tags", JSON.stringify(data.courseTags));
+    }
+
+    if (data.courseThumbnail !== course.thumbnail) {
+      formData.append("thumbnail", data.courseThumbnail);
+    }
+
+    if (data.courseRequirements.toString() !== course.instructions.toString()) {
+      formData.append("instructions", JSON.stringify(data.courseRequirements));
+    }
+
+    setLoading(true);
+
+    const result = await addCourse(formData,token,dispatch,navigate);
+    if(result){
+      
+    }
+  };
 
   const handleFormSubmit = async (data) => {
     if (editCourse) {
