@@ -29,3 +29,7 @@ export const userApi = {
 export const profileApi = {
    PUT_UPDATE_PROFILE_API: BASE_URL + '/profiles ',
 }
+
+export const courseApi = {
+   POST_CREATE_COURSE_API: BASE_URL + '/courses',
+}
