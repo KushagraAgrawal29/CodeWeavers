@@ -12,24 +12,24 @@ const ChipInput = ({
   getValues,
 }) => {
   const [chips, setChips] = useState([]);
-  const [editCourse,course] = useSelector((state) => state.addCourse);
+  const [editCourse, course] = useSelector((state) => state.addCourse);
 
   useEffect(() => {
-    if(editCourse){
+    if (editCourse) {
       setChips(course?.tags);
 
-      register(name,{
+      register(name, {
         required: true,
-        validate: (value => value.length > 0)
-      })
+        validate: (value) => value.length > 0,
+      });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    setvalue(name,chips);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[chips]);
+    setvalue(name, chips);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chips]);
 
   const handleAddChip = (e) => {
     e.preventDefault();
