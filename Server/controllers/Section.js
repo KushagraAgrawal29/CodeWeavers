@@ -69,7 +69,7 @@ exports.updateSection = async(req,res) => {
         }
 
         //update data
-        const section = await Section.findByIdAndUpdate(section,{sectionName},{new:true});
+        const section = await Section.findByIdAndUpdate(sectionId,{sectionName},{new:true});
 
         const course = await Course.findById(courseId)
         .populate({
@@ -124,7 +124,7 @@ exports.deleteSection = async (req,res) => {
 
         //find the updated course and return
         const course = await Course.findById(courseId).populate({
-            path:courseContent,
+            path:"courseContent",
             populate:{
                 path:"subSection",
             }
