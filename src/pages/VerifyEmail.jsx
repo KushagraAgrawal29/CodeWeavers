@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/Common/Spinner";
-import OtpInput from "react-otp-input";
+  import OtpInput from "react-otp-input";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
