@@ -34,3 +34,8 @@ export const courseApi = {
    POST_CREATE_COURSE_API: BASE_URL + '/courses',
    PUT_EDIT_COURSE_API: BASE_URL + '/courses/editcourse',
 }
+
+export const sectionApi = {
+   POST_CREATE_SECTION_API: BASE_URL + '/createSection',
+   PUT_UPDATE_SECTION_API: BASE_URL + '/updateSection',
+}
