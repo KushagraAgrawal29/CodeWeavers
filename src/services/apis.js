@@ -38,4 +38,9 @@ export const courseApi = {
 export const sectionApi = {
    POST_CREATE_SECTION_API: BASE_URL + '/createSection',
    PUT_UPDATE_SECTION_API: BASE_URL + '/updateSection',
+   DELETE_DELETE_SECTION_API: BASE_URL + '/deleteSection',
+};
+
+export const subSectionApi = {
+   DELETE_DELETE_SUBSECTION_API: BASE_URL + '/deleteSubSection',
 }
