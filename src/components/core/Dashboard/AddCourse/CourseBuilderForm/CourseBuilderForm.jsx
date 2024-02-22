@@ -5,9 +5,16 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import NestedView from "./NestedView";
 import { useDispatch, useSelector } from "react-redux";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import { createSection, updateSection } from "../../../../../services/operations/sectionSubSectionServices";
-import { setCourse } from "../../../../../slices/addCourseSlice";
-
+import {
+  createSection,
+  updateSection,
+} from "../../../../../services/operations/sectionSubSectionServices";
+import {
+  setCourse,
+  setEditCourse,
+  setStep,
+} from "../../../../../slices/addCourseSlice";
+import toast from "react-hot-toast";
 
 const CourseBuilderForm = () => {
   const [loading, setLoading] = useState(false);
@@ -25,43 +32,70 @@ const CourseBuilderForm = () => {
     formState: { errors },
   } = useForm();
 
-  const handleCreateSection = async(data) => {
+  const handleCreateSection = async (data) => {
     setLoading(true);
 
     let result = null;
 
-    if(editSectionId){
+    if (editSectionId) {
       //edit section
 
       const formData = new FormData();
 
-      formData.append("sectionId",editSectionId);
-      formData.append("title",data.sectionName);
-      formData.append("courseId",course._id);
+      formData.append("sectionId", editSectionId);
+      formData.append("title", data.sectionName);
+      formData.append("courseId", course._id);
 
-      result = await updateSection(formData,token);
-    }
-    else{
+      result = await updateSection(formData, token);
+    } else {
       //create section
 
       const formData = new FormData();
 
-      formData.append("title",data.sectionName);
-      formData.append("courseId",course._id);
-      result = await createSection(formData,token);
+      formData.append("title", data.sectionName);
+      formData.append("courseId", course._id);
+      result = await createSection(formData, token);
     }
 
-    if(result){
+    if (result) {
       dispatch(setCourse(result));
       setEditSectionId(null);
-      setValue("sectionName","");
+      setValue("sectionName", "");
     }
     setLoading(false);
-  }
+  };
+
+  const handleChangeEditSectionName = (sectionId, sectionName) => {
+    if (sectionId === editSectionId) {
+      handleCancelEditSection();
+      return;
+    }
+    setEditSectionId(sectionId);
+    setValue("sectionName", sectionName);
+  };
 
   const handleCancelEditSection = () => {
     setEditSectionId(null);
     setValue("sectionName", "");
+  };
+
+  const handleGoBack = () => {
+    dispatch(setEditCourse(true));
+    dispatch(setStep(1));
+  };
+
+  const handleGoToNext = () => {
+    if (course.sections.length === 0) {
+      toast.error("Please add atleast one section");
+      return;
+    }
+
+    if (course.sections.some((section) => section.subSections.length === 0)) {
+      toast.error("Please add atleast one lecture in each section");
+      return;
+    }
+
+    dispatch(setStep(3));
   };
 
   return (
@@ -110,12 +144,15 @@ const CourseBuilderForm = () => {
       </form>
 
       {/* Nested View  */}
-      {course && course.sections.length > 0 && <NestedView />}
+      {course && course.sections.length > 0 && (
+        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
+      )}
 
       {/* Back and Next Button  */}
       <div className="flex justify-end gap-x-3">
         <button
           type="button"
+          onClick={handleGoBack}
           disabled={loading}
           className={
             "flex cursor-pointer items-center gap-x-2  py-2 px-5 rounded-md bg-richblack-300 text-richblack-900 font-semibold hover:scale-95 transition-all duration-200"
@@ -124,7 +161,12 @@ const CourseBuilderForm = () => {
           <MdNavigateBefore />
           Back
         </button>
-        <IconBtn type="button" text="Next" disabled={loading}>
+        <IconBtn
+          type="button"
+          text="Next"
+          disabled={loading}
+          onClickHandler={handleGoToNext}
+        >
           <MdNavigateNext />
         </IconBtn>
       </div>
