@@ -3,23 +3,64 @@ import { useForm } from "react-hook-form";
 import IconBtn from "../../../../Common/IconBtn";
 import { IoAddCircleOutline } from "react-icons/io5";
 import NestedView from "./NestedView";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
+import { createSection, updateSection } from "../../../../../services/operations/sectionSubSectionServices";
+import { setCourse } from "../../../../../slices/addCourseSlice";
+
 
 const CourseBuilderForm = () => {
   const [loading, setLoading] = useState(false);
-  const [editCourseId, setEditCourseId] = useState(null);
+  const [editSectionId, setEditSectionId] = useState(null);
 
   const { course } = useSelector((state) => state.addCourse);
+  const { token } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
 
   const {
     register,
     setValue,
+    handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const handleCreateSection = async(data) => {
+    setLoading(true);
+
+    let result = null;
+
+    if(editSectionId){
+      //edit section
+
+      const formData = new FormData();
+
+      formData.append("sectionId",editSectionId);
+      formData.append("title",data.sectionName);
+      formData.append("courseId",course._id);
+
+      result = await updateSection(formData,token);
+    }
+    else{
+      //create section
+
+      const formData = new FormData();
+
+      formData.append("title",data.sectionName);
+      formData.append("courseId",course._id);
+      result = await createSection(formData,token);
+    }
+
+    if(result){
+      dispatch(setCourse(result));
+      setEditSectionId(null);
+      setValue("sectionName","");
+    }
+    setLoading(false);
+  }
+
   const handleCancelEditSection = () => {
-    setEditCourseId(null);
+    setEditSectionId(null);
     setValue("sectionName", "");
   };
 
@@ -27,7 +68,7 @@ const CourseBuilderForm = () => {
     <div className=" bg-richblack-800 rounded-md p-6 border border-richblack-700 space-y-8">
       <p className="text-2xl font-semibold text-richblack-5">Course Builder</p>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit(handleCreateSection)}>
         <div className="flex flex-col">
           <label className="label-style" htmlFor="sectionName">
             Section Name <sup className="text-pink-200">*</sup>
@@ -49,14 +90,14 @@ const CourseBuilderForm = () => {
         <div className="flex items-end gap-x-4">
           <IconBtn
             type="submit"
-            text={editCourseId ? "Edit Course Name" : "Course Name"}
+            text={editSectionId ? "Edit Course Name" : "Course Name"}
             outline={true}
             disabled={loading}
           >
             <IoAddCircleOutline size={20} className="text-yellow-50" />
           </IconBtn>
 
-          {editCourseId && (
+          {editSectionId && (
             <button
               type="button"
               onClick={handleCancelEditSection}
